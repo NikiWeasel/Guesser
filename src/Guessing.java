@@ -39,6 +39,7 @@ public class Guessing {
         }
     }
 
+
     public static boolean dialog(int rand){
         System.out.println("╰(▔∀▔)╯\nБудешь угадывать? (да/нет)");
         Scanner sc1 = new Scanner(System.in);
