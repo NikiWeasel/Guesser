@@ -10,14 +10,13 @@ import java.util.Scanner;
 public class Guessing {
 
     public static int randomiser(int r1, int r2){
-        int rand;
-        return rand = new Random().nextInt(r1, r2) + 1;
+        return new Random().nextInt(r1, r2) + 1;
     }
 
-    public static void range(int number, int rand){
-        if (number < 1 || number > 10) {
-            System.out.println("Читать не умеешь?");
-        } else if (Math.abs(number - rand) > 5) {
+    public static void findRange(int number, int rand){
+        if (number < 1 || number > 10) {System.out.println("Читать не умеешь?");return;}
+
+        if (Math.abs(number - rand) > 5) {
             System.out.println("Холодно");
         } else if (Math.abs(number - rand) > 2) {
             System.out.println("Тепло");
@@ -26,7 +25,7 @@ public class Guessing {
         }
     }
 
-    public static void gsr1(int rand){
+    public static void answer(int rand){
         while (true) {
             Scanner sc = new Scanner(System.in);
             int number = sc.nextInt();
@@ -34,7 +33,7 @@ public class Guessing {
                 break;
             }
             else {
-                range(number, rand);
+                findRange(number, rand);
             }
         }
     }
@@ -51,7 +50,7 @@ public class Guessing {
             case "да": {
                 while (true) {
                     System.out.println("(⌒‿⌒)\nугадай число от 1 до 10");
-                    gsr1(rand);
+                    answer(rand);
                     return true;
                 }
             }
