@@ -4,55 +4,76 @@ import java.util.Scanner;
 /**
  * Тут, короче, наскоряк накиданная клёвая игра в угадайку.
  * Оно число загадывает, а пользователь потом угадывает.
- * Есть подсказки, на сколько далеко.
+ * Есть подсказки, насколько далеко.
  * todo: DRY, KISS, SOLID (точно можно на ООП-шить), и опечатки по мелочи
  */
 public class Guessing {
 
-    public static void main(String[] args) {
-        System.out.println("Привет!\nБудешь угадывать? (да/нет)");
-        Scanner sc = new Scanner(System.in);
-        String answer = sc.nextLine();
-        if (answer.equals("нет")) {
-            System.out.println("(×﹏×)");
-            return;
-        } else if (!answer.equals("да")) {
-            System.out.println("(︶︹︺)\n непонятно, давай до свидания");
-            return;
+    public static int randomiser(int r1, int r2){
+        return new Random().nextInt(r1, r2) + 1;
+    }
+
+    public static String getValidationMessage(int number, int rand){
+        if (number < 1 || number > 10) {return ("Читать не умеешь?");}
+
+        if (Math.abs(number - rand) > 5) {
+            return ("Холодно");
+        } else if (Math.abs(number - rand) > 2) {
+            return ("Тепло");
+        } else {
+            return ("Жгётся!");
         }
-        System.out.println("(⌒‿⌒)");
+    }
+
+    public static void getAnswer(int rand){
         while (true) {
-            int rand = new Random().nextInt(0, 10) + 1;
-            System.out.println("угадай число от 1 до 10");
-            while (true) {
-                int number = sc.nextInt();
-                if (number == rand) {
-                    System.out.println("╰(▔∀▔)╯");
-                    System.out.println("Будешь угадывать? (да/нет)");
-                    sc = new Scanner(System.in);
-                    answer = sc.nextLine();
-                    if (answer.equals("нет")) {
-                        System.out.println("(¬_¬ )");
-                        return;
-                    } else if (!answer.equals("да")) {
-                        System.out.println("(︶︹︺)\n непонятно. Давай, до свидания!");
-                        return;
-                    }
-                    System.out.println("(⌒‿⌒)");
+            Scanner sc = new Scanner(System.in);
+            int number = sc.nextInt();
+            if (number == rand) {
+                break;
+            }
+            else {
+                System.out.println(getValidationMessage(number, rand));
+            }
+        }
+    }
+
+    public static boolean dialog(int rand){
+        System.out.println("╰(▔∀▔)╯\nБудешь угадывать? (да/нет)");
+        Scanner sc1 = new Scanner(System.in);
+        String response = sc1.nextLine();
+        switch (response) {
+            case "нет": {
+                System.out.println("(¬_¬ )");
+                return false;
+            }
+            case "да": {
+                while (true) {
+                    System.out.println("(⌒‿⌒)\nугадай число от 1 до 10");
+                    getAnswer(rand);
+                    return true;
+                }
+            }
+            default: {
+                System.out.println("(︶︹︺)\n непонятно, давай до свидания");
+                return false;
+            }
+        }
+    }
+    public static void main(String[] args) {
+
+        System.out.println("Привет!");
+        try {
+            while (true){
+                if (!dialog(randomiser(0, 10))){
                     break;
-                } else {
-                    if (number < 1 || number > 10) {
-                        System.out.println("Читать не умеешь?");
-                    } else if (Math.abs(number - rand) > 5) {
-                        System.out.println("Холодно");
-                    } else if (Math.abs(number - rand) > 2) {
-                        System.out.println("Тепло");
-                    } else {
-                        System.out.println("Жгётся!");
-                    }
                 }
             }
         }
+        catch (Exception exception){
+            System.out.println("Было введено что-то не то! "+exception);
+        }
+
     }
 
 }
