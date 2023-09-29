@@ -13,19 +13,19 @@ public class Guessing {
         return new Random().nextInt(r1, r2) + 1;
     }
 
-    public static void findRange(int number, int rand){
-        if (number < 1 || number > 10) {System.out.println("Читать не умеешь?");return;}
+    public static String getValidationMessage(int number, int rand){
+        if (number < 1 || number > 10) {return ("Читать не умеешь?");}
 
         if (Math.abs(number - rand) > 5) {
-            System.out.println("Холодно");
+            return ("Холодно");
         } else if (Math.abs(number - rand) > 2) {
-            System.out.println("Тепло");
+            return ("Тепло");
         } else {
-            System.out.println("Жгётся!");
+            return ("Жгётся!");
         }
     }
 
-    public static void answer(int rand){
+    public static void getAnswer(int rand){
         while (true) {
             Scanner sc = new Scanner(System.in);
             int number = sc.nextInt();
@@ -33,7 +33,7 @@ public class Guessing {
                 break;
             }
             else {
-                findRange(number, rand);
+                System.out.println(getValidationMessage(number, rand));
             }
         }
     }
@@ -50,7 +50,7 @@ public class Guessing {
             case "да": {
                 while (true) {
                     System.out.println("(⌒‿⌒)\nугадай число от 1 до 10");
-                    answer(rand);
+                    getAnswer(rand);
                     return true;
                 }
             }
